@@ -8,6 +8,10 @@ npm run dev      # http://localhost:4321
 npm run build    # 타입 검사(astro check) + 정적 빌드 → dist/
 ```
 
+Cloudflare Pages가 push마다 빌드합니다(`npm run build` → `dist`, Node는 `.nvmrc`).
+Cloudflare 빌드 환경은 npm 10이라, npm 11로 만든 `package-lock.json`은 `npm ci`에서 실패할 수 있습니다.
+의존성을 바꿀 때는 `npx npm@10.9.2 install`로 lock 파일을 갱신해 주세요.
+
 ## 구조
 
 ```
