@@ -1,27 +1,12 @@
 ---
 import { site } from '../../data/site';
 ---
-<header class="top">
-  <span class="brand">{site.title}</span>
-  <span class="location">{site.location}</span>
-</header>
-
 <p class="intro">
   이영진. 백엔드 개발자입니다. 낮에는 금융 API와 Kafka를 다루고, 그 밖의 시간에 만든 것들을 여기 모아 둡니다.
   코드는 <a href={site.github}>GitHub</a>에, 연락은 <a href={`mailto:${site.email}`}>{site.email}</a>로.
 </p>
 
 <style>
-  .top {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 16px;
-    font-size: 15px;
-  }
-  .brand { font-weight: 700; }
-  .location { font-family: var(--font-mono); font-size: 13px; color: var(--fg-muted); }
   .intro {
     margin: 0;
     max-width: 640px;

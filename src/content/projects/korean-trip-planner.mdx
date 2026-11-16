@@ -1,0 +1,23 @@
+## 만든 이유
+
+한국인 가족과 외국인 가족이 함께 한국을 여행할 때 언어 장벽 없이 일정을 공유하고 소통하려고 만들었다.
+
+## 구조
+
+- React SPA(PWA) 프런트엔드와 FastAPI 백엔드로 나뉜다. 데이터는 Firestore에 두고, 프런트엔드는 실시간 구독으로 채팅·일정·그룹을 동기화한다.
+- 구글 로그인 후 초대 링크로 가족 그룹에 들어간다. 일정·채팅·갤러리는 그룹 단위로 공유한다.
+- 기능: 날짜별 일정(드래그 앤 드롭 정렬, 네이버 지도 연결), 그룹 채팅과 자동 번역, 사진·영상 갤러리, AI 여행 가이드, 한영 번역기, 메뉴 사진 번역, 원화·달러 환율 계산기.
+- 백엔드 API는 번역, AI 가이드, 채팅, 일정, 미디어, 메뉴 스캔, 그룹 라우터로 나뉜다.
+
+## 기술 스택
+
+- 프런트엔드: React, Vite, Tailwind CSS, Firebase SDK, @dnd-kit, Service Worker(PWA), Firebase Hosting
+- 백엔드: FastAPI(Python), Firebase Admin SDK, Google Cloud Run
+- DB·인증: Firestore, Firebase Authentication(구글 로그인)
+- 외부 API: Google Gemini API, Google Drive API
+
+## 어려웠던 점
+
+**채팅 자동 번역과 문화 키워드.** 메시지를 보낼 때마다 Gemini로 한국어와 영어를 서로 번역한다. 미리 정한 한국 문화 키워드 사전에 걸리는 단어가 있으면 Gemini로 그 키워드의 설명을 만든다.
+
+**사진 저장소.** 업로드한 사진과 영상을 Google Drive에 바로 올리고, Drive 썸네일 링크를 Firestore에 저장한다. 썸네일이 렌더링되려면 업로드 폴더의 공유 권한을 "링크가 있는 모든 사용자"로 두어야 한다.

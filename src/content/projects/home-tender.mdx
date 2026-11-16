@@ -1,0 +1,23 @@
+## 만든 이유
+
+[TODO: 만든 이유]
+
+## 구조
+
+- 호스트(집주인)는 구글 계정으로 로그인해 칵테일 메뉴와 재료 재고를 관리한다. 손님은 공유받은 링크로 로그인 없이 들어와 주문한다.
+- Next.js API 라우트가 주문 생성, 세션, 방명록, AI 추천을 처리하고 Firebase Admin SDK로 Firestore에 쓴다. 클라이언트는 Firestore 실시간 구독으로 세션 상태(주문 일시정지 등)를 받는다.
+- 데이터는 호스트별 컬렉션(`hosts/{uid}/cocktails`, `hosts/{uid}/ingredients`)과 세션별 주문(`sessions/{id}/orders`)으로 나뉜다. 공유 카탈로그의 칵테일과 재료를 호스트 컬렉션으로 한 번에 복사할 수 있다.
+- 주문 API는 세션 토큰, 만료, 주문 일시정지, 칵테일 활성 여부를 차례로 확인한 뒤 주문을 만든다.
+
+## 기술 스택
+
+- Next.js 16(App Router), React 19, TypeScript, Tailwind CSS 4
+- Firebase Authentication, Firestore, Storage, Admin SDK
+- Gemini API(`gemini-2.5-flash`)
+- 배포: Vercel
+
+## 어려웠던 점
+
+**재료 품절과 메뉴 연동.** 재료를 품절로 바꾸면 그 재료가 들어가는 칵테일의 `isActive`를 다시 계산한다. 재료 변경과 칵테일 변경을 Batch Write로 한 번에 반영해, 손님 메뉴에 품절 재료가 든 칵테일이 남지 않게 했다.
+
+**AI 바텐더 추천.** 호스트의 주문 가능한 칵테일 목록만 시스템 프롬프트에 넣고, 목록에 없는 칵테일은 추천하지 말라고 지시한다. 대화 기록을 함께 넘겨 이어지는 대화로 추천한다.

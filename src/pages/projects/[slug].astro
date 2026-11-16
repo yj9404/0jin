@@ -1,0 +1,42 @@
+---
+/**
+ * 서비스 상세 페이지. services.ts의 모든 서비스(status 무관)에 하나씩 만든다.
+ * 본문은 src/content/projects/<slug>.mdx. 파일이 없으면 services.ts 데이터만으로 보여 준다.
+ */
+import { render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectHero from '../../components/project/ProjectHero.astro';
+import ProjectBody from '../../components/project/ProjectBody.astro';
+import ProjectPager from '../../components/project/ProjectPager.astro';
+import type { Service } from '../../data/services';
+import { site } from '../../data/site';
+import { orderedServices, projectEntries } from '../../lib/projects';
+
+export async function getStaticPaths() {
+  const entries = await projectEntries();
+  const ordered = orderedServices();
+  return ordered.map((service, i) => ({
+    params: { slug: service.slug },
+    props: { service, entry: entries.get(service.slug), prev: ordered[i - 1], next: ordered[i + 1] },
+  }));
+}
+
+interface Props {
+  service: Service;
+  entry?: CollectionEntry<'projects'>;
+  prev?: Service;
+  next?: Service;
+}
+
+const { service, entry, prev, next } = Astro.props;
+const Content = entry ? (await render(entry)).Content : null;
+---
+<BaseLayout title={`${service.name} — ${site.title}`} description={service.tagline} back>
+  <ProjectHero service={service} />
+  {Content && (
+    <ProjectBody>
+      <Content />
+    </ProjectBody>
+  )}
+  <ProjectPager prev={prev} next={next} />
+</BaseLayout>

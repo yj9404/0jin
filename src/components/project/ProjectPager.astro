@@ -1,0 +1,48 @@
+---
+/** 이전·다음 서비스. 순서는 홈 그리드(layout.ts)를 따른다. */
+import type { Service } from '../../data/services';
+import { projectPath } from '../../lib/card';
+
+interface Props {
+  prev?: Service;
+  next?: Service;
+}
+
+const { prev, next } = Astro.props;
+---
+{(prev || next) && (
+  <nav class="pager" aria-label="다른 서비스">
+    {prev ? (
+      <a class="item prev" href={projectPath(prev.slug)} rel="prev">
+        <span class="dir">← 이전</span>
+        <span class="name">{prev.name}</span>
+      </a>
+    ) : <span />}
+    {next ? (
+      <a class="item next" href={projectPath(next.slug)} rel="next">
+        <span class="dir">다음 →</span>
+        <span class="name">{next.name}</span>
+      </a>
+    ) : <span />}
+  </nav>
+)}
+
+<style>
+  .pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 20px 0;
+    border-top: 1px solid var(--line);
+    text-decoration: none;
+  }
+  .next { text-align: right; }
+  .dir { font-family: var(--font-mono); font-size: 13px; color: var(--fg-muted); }
+  .name { font-size: 17px; font-weight: 700; word-break: keep-all; }
+  .item:hover .name { text-decoration: underline; text-underline-offset: 4px; }
+</style>

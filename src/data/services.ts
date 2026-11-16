@@ -117,8 +117,8 @@ export const services: Service[] = [
   },
   {
     slug: 'quiz',
-    name: '가족 퀴즈',
-    tagline: '휴대폰으로 QR 찍고 다 같이 푸는 가족 퀴즈.',
+    name: '퀴즈',
+    tagline: '휴대폰으로 QR 찍고 다 같이 푸는 실시간 퀴즈.',
     category: 'Web',
     since: '2026.10',
     status: 'live',
@@ -126,7 +126,7 @@ export const services: Service[] = [
       { kind: 'site', href: 'https://quiz.0jin.app' },
       { kind: 'github', href: 'https://github.com/yj9404/quiz' },
     ],
-    // 가족 퀴즈 --gold(버터)
+    // 퀴즈 --gold(버터)
     color: '#FFC94D',
     ink: '#4A3426',
     screen: { type: 'mockup', name: 'quiz' },

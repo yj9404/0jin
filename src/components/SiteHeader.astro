@@ -1,0 +1,33 @@
+---
+/** 모든 페이지 공통 헤더. back이면 홈으로 돌아가는 "← 전체" 링크를 붙인다. */
+import { site } from '../data/site';
+
+interface Props {
+  back?: boolean;
+}
+
+const { back = false } = Astro.props;
+---
+<header class="top">
+  <span class="left">
+    <a class="brand" href="/">{site.title}</a>
+    {back && <a class="back" href="/">← 전체</a>}
+  </span>
+  <span class="location">{site.location}</span>
+</header>
+
+<style>
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 15px;
+  }
+  .left { display: flex; align-items: baseline; gap: 20px; }
+  .brand { font-weight: 700; text-decoration: none; }
+  .back { color: var(--fg-sub); text-decoration: none; }
+  .back:hover { color: var(--fg); }
+  .location { font-family: var(--font-mono); font-size: 13px; color: var(--fg-muted); }
+</style>

@@ -1,17 +1,14 @@
 import type { Service, ServiceLink } from '../data/services';
 
-export type CardLink = { href: string; label: string };
-
-export type CardView = {
-  /** 카드 전체가 가는 곳. 없으면 링크 없는 카드 */
-  href?: string;
-  /** 메타 줄 앞부분(텍스트) */
-  meta: string[];
-  /** 메타 줄 뒤에 붙는 링크. status가 live일 때만 */
-  metaLinks: CardLink[];
-};
+export type CardLink = { kind: ServiceLink['kind']; href: string; label: string };
 
 const STATUS_TEXT = { wip: '만드는 중', archived: '운영 종료' } as const;
+const KIND_ORDER: ServiceLink['kind'][] = ['site', 'toss', 'github'];
+
+/** 서비스 상세 페이지 경로 */
+export function projectPath(slug: string): string {
+  return `/projects/${slug}/`;
+}
 
 export function linkLabel(link: ServiceLink): string {
   if (link.label) return link.label;
@@ -20,35 +17,37 @@ export function linkLabel(link: ServiceLink): string {
   return new URL(link.href).host;
 }
 
-/** status에 따라 카드의 링크와 메타 줄을 정한다. 주소를 보여 줄지는 오직 여기서 결정한다. */
-export function cardView(service: Service): CardView {
-  const github = service.links.find((l) => l.kind === 'github');
-  const serviceLinks = service.links.filter((l) => l.kind !== 'github');
+/** "2026.03 – 2026.08". until이 없으면 since만 */
+export function periodText(service: Service): string {
+  return service.until ? `${service.since} – ${service.until}` : service.since;
+}
 
+/**
+ * 화면에 보여 줄 외부 링크. 주소를 보여 줄지는 오직 여기서 정한다.
+ * live는 전부, wip·archived는 GitHub만. 순서는 site → toss → github.
+ */
+export function visibleLinks(service: Service): CardLink[] {
+  return service.links
+    .filter((l) => service.status === 'live' || l.kind === 'github')
+    .sort((a, b) => KIND_ORDER.indexOf(a.kind) - KIND_ORDER.indexOf(b.kind))
+    .map((l) => ({ kind: l.kind, href: l.href, label: linkLabel(l) }));
+}
+
+/** 메타 줄의 텍스트 부분. "Web · 2026.11", "Toss Mini App · 만드는 중", "Web · 2026.03 – 2026.08 · 운영 종료" */
+export function metaText(service: Service): string[] {
   switch (service.status) {
     case 'live':
-      return {
-        href: serviceLinks[0]?.href ?? github?.href,
-        meta: [service.category, service.since],
-        metaLinks: serviceLinks.map((l) => ({ href: l.href, label: linkLabel(l) })),
-      };
+      return [service.category, service.since];
     case 'wip':
-      return {
-        href: github?.href,
-        meta: [service.category, STATUS_TEXT.wip],
-        metaLinks: [],
-      };
+      return [service.category, STATUS_TEXT.wip];
     case 'archived':
-      return {
-        href: github?.href,
-        meta: [
-          service.category,
-          service.until ? `${service.since} – ${service.until}` : service.since,
-          STATUS_TEXT.archived,
-        ],
-        metaLinks: [],
-      };
+      return [service.category, periodText(service), STATUS_TEXT.archived];
   }
+}
+
+/** 홈 카드 메타 줄 뒤에 붙는 서비스 주소. live일 때만 */
+export function metaLinks(service: Service): CardLink[] {
+  return visibleLinks(service).filter((l) => l.kind !== 'github' && service.status === 'live');
 }
 
 /** 배경 밝기에 맞는 글자색. WCAG 상대 휘도 기준 */

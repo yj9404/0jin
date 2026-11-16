@@ -1,12 +1,19 @@
 ---
+/** 모든 페이지 공통 틀: 배경·폭·글꼴·헤더·푸터. 페이지 내용은 섹션 컴포넌트로 slot에 넣는다. */
+import { ClientRouter } from 'astro:transitions';
+import SiteHeader from '../components/SiteHeader.astro';
+import Footer from '../components/sections/Footer.astro';
 import { site } from '../data/site';
 
 interface Props {
   title?: string;
   description?: string;
+  /** 헤더에 "← 전체" 링크를 붙인다(상세 페이지) */
+  back?: boolean;
 }
 
-const { title = site.title, description = site.description } = Astro.props;
+const { title = site.title, description = site.description, back = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 <!doctype html>
 <html lang="ko">
@@ -15,10 +22,12 @@ const { title = site.title, description = site.description } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="color-scheme" content="dark" />
+    <link rel="canonical" href={canonical} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <title>{title}</title>
-    <!-- 홈: IBM Plex Sans KR · Geist Mono · Gowun Dodum. 목업: Noto Sans KR(시스템 글꼴 대체), Jua(가족 퀴즈), Outfit·Inter(HomeTender·Korea Trip Planner), JetBrains Mono·Pretendard(포모봇) -->
+    <!-- 홈: IBM Plex Sans KR · Geist Mono · Gowun Dodum. 목업: Noto Sans KR(시스템 글꼴 대체), Jua(퀴즈), Outfit·Inter(HomeTender·Korea Trip Planner), JetBrains Mono·Pretendard(포모봇) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -26,11 +35,35 @@ const { title = site.title, description = site.description } = Astro.props;
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=Geist+Mono:wght@400;500&family=Gowun+Dodum&family=Noto+Sans+KR:wght@400;500;700;900&family=Jua&family=Outfit:wght@600;700&family=Inter:wght@600;700&family=JetBrains+Mono:wght@700&display=swap"
     />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css" />
+    <ClientRouter />
   </head>
   <body>
-    <slot />
+    <div class="wrap">
+      <SiteHeader back={back} />
+      <main class="content">
+        <slot />
+      </main>
+      <Footer />
+    </div>
   </body>
 </html>
+
+<style>
+  .wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 40px 80px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 88px;
+  }
+  .content { display: flex; flex-direction: column; gap: 88px; }
+  @media (max-width: 820px) {
+    .wrap { padding: 24px 16px 56px; gap: 64px; }
+    .content { gap: 64px; }
+  }
+</style>
 
 <style is:global>
   :root {
