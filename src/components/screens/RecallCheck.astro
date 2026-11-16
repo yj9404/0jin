@@ -1,0 +1,79 @@
+---
+// 리콜체크 홈: frontend/src/pages/HomePage.tsx (TDS Top · SearchField · Button weak · Tab)
+const tabs = ['전체', '식품', '공산품', '자동차'];
+---
+<div class="m">
+  <span class="title">회수·판매중지 제품을<br />확인해요</span>
+  <div class="search">
+    <span class="field">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="#B0B8C1" stroke-width="2.2" /><path d="M16 16l4 4" stroke="#B0B8C1" stroke-width="2.2" stroke-linecap="round" /></svg>
+      제품명이나 업체명을 입력해요
+    </span>
+    <span class="go">검색</span>
+  </div>
+  <span class="weak">바코드 번호로 확인하기</span>
+  <div class="tabs">
+    {tabs.map((t, i) => <span class:list={{ on: i === 0 }}>{t}</span>)}
+  </div>
+</div>
+
+<style>
+  .m {
+    height: 100%;
+    box-sizing: border-box;
+    padding: 26px 20px 20px;
+    background: #ffffff;
+    color: #191f28;
+    font-family: 'Toss Product Sans', -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .title { font-size: 21px; font-weight: 700; line-height: 1.4; letter-spacing: -0.02em; }
+  .search { display: flex; gap: 8px; }
+  .field {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #f2f4f6;
+    border-radius: 12px;
+    padding: 11px 10px;
+    font-size: 12px;
+    letter-spacing: -0.02em;
+    color: #8b95a1;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .field svg { width: 16px; height: 16px; flex-shrink: 0; }
+  .go {
+    background: #3182f6;
+    color: #ffffff;
+    border-radius: 10px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .weak {
+    background: #e8f3ff;
+    color: #1b64da;
+    border-radius: 14px;
+    padding: 14px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .tabs {
+    display: flex;
+    gap: 18px;
+    border-bottom: 1px solid #f2f4f6;
+    font-size: 14px;
+    font-weight: 600;
+    color: #8b95a1;
+  }
+  .tabs span { padding: 8px 0 10px; }
+  .tabs .on { color: #191f28; box-shadow: inset 0 -2px 0 #191f28; }
+</style>

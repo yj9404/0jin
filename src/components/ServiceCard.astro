@@ -1,0 +1,216 @@
+---
+/**
+ * 서비스 카드 하나. 크기(span)별 구성:
+ *   3 — 넓은 커버: 왼쪽 큰 제목, 오른쪽 화면. 캡션은 한 줄(이름·설명 ↔ 메타)
+ *   2 — span 3과 같은 구성을 줄인 중간형
+ *   1 — 커버 가운데 화면, 캡션은 세로로 쌓음
+ * 링크·메타 줄은 status로만 정해진다(src/lib/card.ts).
+ */
+import { Image } from 'astro:assets';
+import type { Service } from '../data/services';
+import { cardView, inkFor } from '../lib/card';
+import { mockups } from './screens';
+
+interface Props {
+  service: Service;
+  span: 1 | 2 | 3;
+  row: number;
+  column: number;
+}
+
+const { service, span, row, column } = Astro.props;
+const view = cardView(service);
+const wide = span > 1;
+const ink = service.ink ?? inkFor(service.color);
+const coverLines = (service.coverTitle ?? service.name).split('\n');
+const screen = service.screen;
+const Mockup = screen.type === 'mockup' ? mockups[screen.name] : null;
+---
+<article
+  class:list={['card', `span-${span}`, `is-${service.status}`, { linked: view.href }]}
+  style={`grid-row: ${row}; grid-column: ${column} / span ${span}; --card-bg: ${service.color}; --card-ink: ${ink};`}
+>
+  <div class="cover">
+    <div class="cover-art">
+      {wide && (
+        <span class="cover-title" aria-hidden="true">
+          {coverLines.map((line, i) => (<>{i > 0 && <br />}{line}</>))}
+        </span>
+      )}
+      <div class="screen">
+        {Mockup && <Mockup />}
+        {screen.type === 'image' &&
+          (typeof screen.src === 'string'
+            ? <img src={screen.src} alt={screen.alt} loading="lazy" decoding="async" />
+            : <Image src={screen.src} alt={screen.alt} widths={[380, 760]} sizes="380px" />)}
+      </div>
+    </div>
+    {service.status === 'wip' && <span class="badge">만드는 중</span>}
+  </div>
+
+  <div class="caption">
+    <span class="text">
+      <h3 class="name">
+        {view.href ? <a class="card-link" href={view.href}>{service.name}</a> : service.name}
+      </h3>
+      <span class="tagline">{service.tagline}</span>
+    </span>
+    <span class="meta">
+      {view.meta.join(' · ')}
+      {view.metaLinks.map((l) => (<> · <a href={l.href}>{l.label}</a></>))}
+    </span>
+  </div>
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-width: 0;
+  }
+
+  /* 커버 */
+  .cover {
+    position: relative;
+    height: 420px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .span-3 .cover { height: 540px; }
+  .cover-art {
+    height: 100%;
+    background: var(--card-bg);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0 32px;
+    box-sizing: border-box;
+  }
+  .is-archived .cover-art { filter: grayscale(1); }
+
+  .span-3 .cover-art,
+  .span-2 .cover-art {
+    justify-content: space-between;
+    gap: 48px;
+    padding: 0 64px;
+  }
+  .span-2 .cover-art { gap: 32px; padding: 0 40px; }
+
+  .cover-title {
+    align-self: center;
+    font-family: 'Gowun Dodum', sans-serif;
+    font-size: 52px;
+    line-height: 1.3;
+    color: var(--card-ink);
+    max-width: 460px;
+    word-break: keep-all;
+  }
+  .span-2 .cover-title { font-size: 36px; max-width: 300px; }
+
+  /* 폰 화면 */
+  .screen {
+    width: 100%;
+    height: 340px;
+    border-radius: 22px 22px 0 0;
+    overflow: hidden;
+    background: #ffffff;
+    transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .span-3 .screen {
+    width: 380px;
+    height: 460px;
+    flex-shrink: 1;
+    border-radius: 28px 28px 0 0;
+    margin-left: auto;
+  }
+  .span-2 .screen {
+    width: 320px;
+    flex-shrink: 1;
+    margin-left: auto;
+  }
+  .screen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+  }
+  /* 화면이 올라오는 효과는 링크가 있는 카드에만 */
+  .linked:hover .screen,
+  .linked:focus-within .screen {
+    transform: translateY(-14px);
+  }
+  .linked:has(.card-link:focus-visible) .cover {
+    outline: 2px solid var(--fg);
+    outline-offset: 6px;
+  }
+
+  /* 만드는 중 표시: 서비스와 상관없이 홈 공통 스타일 */
+  .badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(17, 17, 17, 0.82);
+    color: var(--fg);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+  }
+
+  /* 캡션 */
+  .caption {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .span-3 .caption,
+  .span-2 .caption {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+  }
+  .text { display: flex; flex-direction: column; gap: 4px; }
+  .name { margin: 0; font-size: 18px; font-weight: 700; }
+  .span-3 .name { font-size: 20px; }
+  .card-link { color: inherit; text-decoration: none; }
+  /* 카드 전체를 덮는 링크. 메타 줄의 링크는 그 위에 올린다 */
+  .card-link::after { content: ''; position: absolute; inset: 0; }
+  .card-link:focus-visible { outline: none; }
+  .tagline { font-size: 15px; color: var(--fg-sub); }
+  .meta {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--fg-muted);
+    padding-top: 6px;
+  }
+  .span-3 .meta,
+  .span-2 .meta { padding-top: 0; }
+  .meta a { position: relative; z-index: 1; color: var(--fg-muted); }
+  .meta a:hover { color: var(--fg); }
+
+  @media (max-width: 820px) {
+    .card { grid-row: auto !important; grid-column: auto !important; }
+    .span-3 .cover { height: 420px; }
+    .span-3 .cover-art,
+    .span-2 .cover-art { justify-content: center; padding: 0 32px; }
+    .cover-title { display: none; }
+    .span-3 .screen,
+    .span-2 .screen {
+      width: 100%;
+      max-width: 380px;
+      height: 340px;
+      margin: 0 auto;
+      border-radius: 22px 22px 0 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .screen { transition: none; }
+  }
+</style>

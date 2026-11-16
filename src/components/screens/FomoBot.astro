@@ -1,0 +1,100 @@
+---
+// FomoBot 웹(다크 테마) 급등 랭킹 화면: frontend/src/tokens.ts, components/RankingRow.tsx
+// 순위·등락률은 예시 값
+const rows = [
+  { rank: '01', pct: '+18.2%' },
+  { rank: '02', pct: '+12.7%' },
+  { rank: '03', pct: '+9.4%' },
+  { rank: '04', pct: '+6.1%' },
+];
+---
+<div class="m">
+  <div class="seg">
+    <span class="on">주식</span>
+    <span>부동산</span>
+  </div>
+  <div class="chips">
+    <span>전일</span>
+    <span class="on">7일</span>
+    <span>1개월</span>
+  </div>
+  <span class="title">상승률 상위 ▲</span>
+  <ol class="rows">
+    {rows.map((r) => (
+      <li>
+        <span class="rank">{r.rank}</span>
+        <span class="bar" aria-hidden="true"></span>
+        <span class="pct">{r.pct}</span>
+      </li>
+    ))}
+  </ol>
+</div>
+
+<style>
+  .m {
+    height: 100%;
+    box-sizing: border-box;
+    padding: 20px 18px;
+    background: #0b0d12;
+    color: #e9edf5;
+    font-family: 'Pretendard Variable', Pretendard, -apple-system, system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .seg {
+    display: flex;
+    padding: 3px;
+    border-radius: 10px;
+    background: #11151d;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .seg span {
+    flex: 1;
+    text-align: center;
+    padding: 7px 0;
+    border-radius: 8px;
+    color: #9aa5b8;
+  }
+  .seg .on { background: #2a3346; color: #e9edf5; }
+  .chips { display: flex; gap: 6px; font-size: 12px; font-weight: 600; }
+  .chips span {
+    padding: 5px 11px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #9aa5b8;
+  }
+  .chips .on { background: rgba(62, 123, 250, 0.15); border-color: #3e7bfa; color: #7aa2ff; }
+  .title { font-size: 15px; font-weight: 700; }
+  .rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .rows li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .rank {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: #7aa2ff;
+    background: rgba(62, 123, 250, 0.12);
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .bar { flex: 1; height: 11px; border-radius: 4px; background: #161b26; }
+  .pct {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: #1ecb81;
+  }
+</style>

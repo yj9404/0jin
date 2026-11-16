@@ -1,0 +1,80 @@
+---
+// HomeTender 손님 메뉴: app/party/[token]/page.tsx, components/guest/CocktailCard.tsx. 칵테일은 cocktails.csv
+const menu = [
+  { name: '김렛', abv: '22%', tags: ['진', '라임'] },
+  { name: '네그로니', abv: '29%', tags: ['진', '캄파리', '오렌지'] },
+  { name: '다이키리', abv: '22%', tags: ['화이트 럼', '라임'] },
+];
+---
+<div class="m">
+  <div class="head">
+    <span class="title">Party Menu</span>
+    <span class="sub">주문 가능한 칵테일을 확인하세요.</span>
+  </div>
+  <ul class="list">
+    {menu.map((c) => (
+      <li class="item">
+        <span class="thumb" aria-hidden="true">{c.name.slice(0, 1)}</span>
+        <span class="body">
+          <span class="row">
+            <span class="name">{c.name}</span>
+            <span class="abv">{c.abv}</span>
+          </span>
+          <span class="tags">{c.tags.map((t) => <span>{t}</span>)}</span>
+        </span>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .m {
+    height: 100%;
+    box-sizing: border-box;
+    padding: 22px 18px;
+    background: #0f172a;
+    color: #f8fafc;
+    font-family: 'Outfit', 'Inter', 'Noto Sans KR', sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .head { display: flex; flex-direction: column; gap: 4px; }
+  .title { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
+  .sub { font-size: 12px; color: #9ca3af; }
+  .list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  .item {
+    display: flex;
+    gap: 12px;
+    padding: 10px;
+    border-radius: 16px;
+    background: rgba(30, 41, 59, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .thumb {
+    width: 44px;
+    height: 52px;
+    border-radius: 10px;
+    flex-shrink: 0;
+    background: linear-gradient(to top right, rgba(244, 63, 94, 0.4), rgba(168, 85, 247, 0.4));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.5);
+  }
+  .body { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 6px; }
+  .row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .name { font-size: 15px; font-weight: 700; }
+  .abv {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 1px 8px;
+    border-radius: 999px;
+    color: #bae6fd;
+    background: rgba(14, 165, 233, 0.15);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; font-size: 11px; font-weight: 600; color: #f43f5e; }
+</style>

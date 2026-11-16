@@ -1,0 +1,65 @@
+---
+// 투디그리 랜딩 히어로: frontend/app/page.tsx
+---
+<div class="m">
+  <span class="pill"><i aria-hidden="true"></i>지인 기반 프라이빗 매칭</span>
+  <p class="title">세상 모든 인연은 6단계면 닿지만, 우리는 딱 <u>2단계</u>까지만 믿기로 했습니다.</p>
+  <div class="actions">
+    <span class="primary">지금 바로 등록하기</span>
+    <span class="pair">
+      <span class="outline">이미 등록하셨나요?</span>
+      <span class="kakao">서비스 문의하기</span>
+    </span>
+  </div>
+</div>
+
+<style>
+  .m {
+    height: 100%;
+    box-sizing: border-box;
+    padding: 24px 18px;
+    background: radial-gradient(circle at 50% 0%, #eff6ff, #ffffff 60%);
+    color: #0f172a;
+    font-family: 'Noto Sans KR', -apple-system, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    font-size: 10px;
+    font-weight: 700;
+    color: #475569;
+  }
+  .pill i { width: 6px; height: 6px; border-radius: 50%; background: #2563eb; }
+  .title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+    word-break: keep-all;
+  }
+  .title u { color: #2563eb; text-decoration-color: #bfdbfe; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  .actions { width: 100%; display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
+  .primary {
+    background: #2563eb;
+    color: #ffffff;
+    border-radius: 14px;
+    padding: 13px;
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .pair { display: flex; gap: 6px; font-size: 11px; font-weight: 700; }
+  .pair span { flex: 1; border-radius: 10px; padding: 10px 4px; white-space: nowrap; }
+  .outline { border: 1px solid #e2e8f0; color: #475569; background: #ffffff; }
+  .kakao { background: #fee500; color: #191919; }
+</style>

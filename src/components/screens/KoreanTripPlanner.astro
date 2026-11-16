@@ -1,0 +1,98 @@
+---
+// Korea Trip Planner 일정 화면: frontend/src/pages/ItineraryPage.jsx
+const stops = [
+  { time: '10:00' },
+  { time: '13:30' },
+];
+---
+<div class="m">
+  <div class="head"><span class="title">Korea Trip</span></div>
+  <div class="days">
+    <span class="on">Day 1</span>
+    <span>Day 2</span>
+    <span>Day 3</span>
+  </div>
+  <ol class="timeline">
+    {stops.map((s, i) => (
+      <li>
+        <span class="num">{i + 1}</span>
+        <span class="stop">
+          <span class="place" aria-hidden="true"></span>
+          <span class="time">{s.time}</span>
+        </span>
+      </li>
+    ))}
+  </ol>
+  <span class="add">+ Add Place</span>
+</div>
+
+<style>
+  .m {
+    height: 100%;
+    box-sizing: border-box;
+    background: #f9fafb;
+    color: #1f2937;
+    font-family: 'Inter', 'Noto Sans KR', system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+  }
+  .head { background: #ffffff; padding: 20px 16px 12px; border-bottom: 1px solid #e5e7eb; }
+  .title { font-size: 20px; font-weight: 700; }
+  .days {
+    display: flex;
+    gap: 8px;
+    padding: 10px 16px;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .days span { padding: 6px 11px; border-radius: 8px; background: #f3f4f6; color: #4b5563; white-space: nowrap; }
+  .days .on { background: #3b82f6; color: #ffffff; }
+  .timeline { list-style: none; margin: 0; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .timeline li { display: flex; gap: 10px; align-items: flex-start; }
+  .num {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #3b82f6;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .stop {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 10px 12px;
+  }
+  .place { flex: 1; max-width: 120px; height: 11px; border-radius: 4px; background: #e5e7eb; }
+  .time {
+    font-size: 11px;
+    font-weight: 700;
+    color: #2563eb;
+    background: #eff6ff;
+    border: 1px solid #dbeafe;
+    border-radius: 999px;
+    padding: 1px 8px;
+  }
+  .add {
+    margin: 0 16px 16px;
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+    background: linear-gradient(to right, #3b82f6, #4f46e5);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+  }
+</style>

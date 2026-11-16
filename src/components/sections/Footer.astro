@@ -1,0 +1,22 @@
+---
+import { site } from '../../data/site';
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <span>© {year} {site.title}</span>
+  <span><a href={site.github}>GitHub</a> · <a href={`mailto:${site.email}`}>{site.email}</a></span>
+</footer>
+
+<style>
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--fg-muted);
+  }
+</style>

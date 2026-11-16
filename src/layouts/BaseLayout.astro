@@ -1,0 +1,60 @@
+---
+import { site } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = site.title, description = site.description } = Astro.props;
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>{title}</title>
+    <!-- 홈: IBM Plex Sans KR · Geist Mono · Gowun Dodum. 목업: Noto Sans KR(시스템 글꼴 대체), Jua(가족 퀴즈), Outfit·Inter(HomeTender·Korea Trip Planner), JetBrains Mono·Pretendard(포모봇) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=Geist+Mono:wght@400;500&family=Gowun+Dodum&family=Noto+Sans+KR:wght@400;500;700;900&family=Jua&family=Outfit:wght@600;700&family=Inter:wght@600;700&family=JetBrains+Mono:wght@700&display=swap"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --bg: #111111;
+    --fg: #ededed;
+    --fg-sub: #a3a3a3;
+    --fg-muted: #8f8f8f;
+    --line: #2a2a2a;
+    --link-underline: #555555;
+    --font-sans: 'IBM Plex Sans KR', -apple-system, 'Apple SD Gothic Neo', sans-serif;
+    --font-mono: 'Geist Mono', ui-monospace, monospace;
+  }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    -webkit-text-size-adjust: 100%;
+  }
+  a {
+    color: var(--fg);
+    text-decoration: underline;
+    text-decoration-color: var(--link-underline);
+    text-underline-offset: 4px;
+  }
+  a:hover { text-decoration-color: var(--fg); }
+</style>

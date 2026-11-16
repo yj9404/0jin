@@ -1,0 +1,75 @@
+---
+// 가족 퀴즈 개인 화면(문제 풀기): src/Player.tsx, src/styles.css. 문제는 questions.example.json
+const choices = ['김치찌개', '된장찌개', '삼겹살', '짜장면'];
+---
+<div class="m">
+  <div class="card">
+    <div class="qhead">
+      <span class="qno">3번 문제</span>
+      <span class="pill">빨리 맞히면 5점</span>
+    </div>
+    <span class="timer" aria-hidden="true"><i></i></span>
+    <p class="qtext">남편이 가장 좋아하는 음식은?</p>
+    <div class="choices">
+      {choices.map((c, i) => (
+        <span class:list={['choice', { on: i === 0 }]}><b>{i + 1}</b>{c}</span>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .m {
+    height: 100%;
+    box-sizing: border-box;
+    padding: 18px 16px;
+    background: #fff6e9;
+    color: #4a3426;
+    font-family: 'Gowun Dodum', -apple-system, 'Apple SD Gothic Neo', sans-serif;
+  }
+  .card {
+    background: #fffdf8;
+    border: 2px solid #ebd9c4;
+    border-radius: 24px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .qhead { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .qno { font-family: 'Jua', 'Gowun Dodum', sans-serif; font-size: 15px; color: #7a5e4f; }
+  .pill {
+    font-size: 11px;
+    background: #ffd978;
+    border-radius: 999px;
+    padding: 3px 9px;
+    white-space: nowrap;
+  }
+  .timer { height: 8px; border-radius: 999px; background: #f1e2cf; overflow: hidden; }
+  .timer i { display: block; height: 100%; width: 62%; background: #f7935a; border-radius: inherit; }
+  .qtext { margin: 2px 0; font-family: 'Jua', 'Gowun Dodum', sans-serif; font-size: 19px; line-height: 1.3; }
+  .choices { display: flex; flex-direction: column; gap: 6px; }
+  .choice {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 2px solid #f1e2cf;
+    border-radius: 14px;
+    padding: 6px 10px;
+    font-size: 14px;
+  }
+  .choice b {
+    font-family: 'Jua', sans-serif;
+    font-weight: 400;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #f1dfc8;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }
+  .choice.on { border-color: #f7935a; background: #fff1e6; }
+  .choice.on b { background: #f7935a; color: #ffffff; }
+</style>

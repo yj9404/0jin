@@ -1,0 +1,67 @@
+---
+// 연봉체크 홈: frontend/src/pages/HomePage.tsx, styles/tokens.css
+---
+<div class="m">
+  <span class="title">궁금한 회사의 연봉과<br />퇴사율을 찾아보세요</span>
+  <div class="search">
+    <span class="field">회사 이름을 입력해 주세요</span>
+    <span class="go">검색</span>
+  </div>
+  <div class="card">
+    <span class="card-title">내 연봉은 어디쯤일까요?</span>
+    <span class="dots" aria-hidden="true">
+      {Array.from({ length: 14 }, (_, i) => <i class:list={{ me: i === 9 }}></i>)}
+    </span>
+  </div>
+</div>
+
+<style>
+  .m {
+    height: 100%;
+    box-sizing: border-box;
+    padding: 26px 20px 20px;
+    background: #ffffff;
+    color: #191b1f;
+    font-family: 'Toss Product Sans', -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .title { font-size: 21px; font-weight: 700; line-height: 1.4; letter-spacing: -0.02em; }
+  .search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid #e5e8eb;
+    border-radius: 14px;
+    padding: 6px 6px 6px 14px;
+  }
+  .field {
+    flex: 1;
+    min-width: 0;
+    font-size: 13px;
+    color: #b0b8c1;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .go {
+    background: #3459d6;
+    color: #ffffff;
+    border-radius: 10px;
+    padding: 9px 14px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .card {
+    background: #f4f5f7;
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .card-title { font-size: 15px; font-weight: 600; }
+  .dots { display: flex; flex-wrap: wrap; gap: 6px; }
+  .dots i { width: 10px; height: 10px; border-radius: 50%; background: #bfc5ce; }
+  .dots .me { background: #3459d6; }
+</style>

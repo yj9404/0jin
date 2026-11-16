@@ -1,0 +1,106 @@
+---
+// tell-you-later의 기본 테마(dm)에서 잠긴 편지 화면: src/themes/dm
+---
+<div class="m">
+  <div class="head">
+    <span class="avatar" aria-hidden="true">
+      <svg viewBox="0 0 36 36"><circle cx="18" cy="14" r="6.5" fill="#FFFFFF" /><ellipse cx="18" cy="33" rx="12.5" ry="10" fill="#FFFFFF" /></svg>
+    </span>
+    <span class="who">
+      <span class="name">보내는 사람</span>
+      <span class="status">12월 24일까지 입력 중</span>
+    </span>
+  </div>
+  <p class="teaser">할 말이 있는데<br />12월 24일에 할게</p>
+  <div class="chat">
+    <span class="bubble first">할 말이 있는데</span>
+    <span class="bubble last">그게 뭐냐면…</span>
+    <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+  </div>
+  <span class="cta">나도 예약 DM 보내기</span>
+</div>
+
+<style>
+  .m {
+    height: 100%;
+    box-sizing: border-box;
+    padding: 22px 22px 24px;
+    background: #ffffff;
+    color: #000000;
+    font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #efefef;
+  }
+  .avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #dbdbdb;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .avatar svg { width: 100%; height: 100%; display: block; }
+  .who { display: flex; flex-direction: column; }
+  .name { font-size: 14px; font-weight: 700; }
+  .status { font-size: 12px; color: #737373; }
+  .teaser {
+    margin: 0;
+    font-size: 26px;
+    line-height: 1.25;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+  }
+  .chat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    gap: 3px;
+  }
+  .bubble {
+    background: #efefef;
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+  .first { border-radius: 20px 20px 20px 5px; }
+  .last { border-radius: 5px 20px 20px 5px; }
+  .dots {
+    margin-top: 6px;
+    display: flex;
+    gap: 4px;
+    background: #efefef;
+    border-radius: 5px 20px 20px 20px;
+    padding: 13px 14px;
+  }
+  .dots i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #000000;
+    animation: blink 1.2s infinite;
+  }
+  .dots i:nth-child(2) { animation-delay: 0.15s; }
+  .dots i:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes blink {
+    0%, 80%, 100% { opacity: 0.25; }
+    40% { opacity: 1; }
+  }
+  .cta {
+    border-radius: 25px;
+    background: linear-gradient(90deg, #e8601c 0%, #dd2a7b 50%, #8134af 100%);
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+    padding: 14px;
+  }
+</style>
