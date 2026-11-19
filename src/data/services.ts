@@ -148,7 +148,7 @@ export const services: Service[] = [
   },
   {
     slug: 'two-degrees',
-    name: '투디그리',
+    name: 'TwoDegrees',
     tagline: '지인의 지인까지만 연결하는 소개팅 주선 서비스.',
     category: 'Web',
     since: '2026.03',
